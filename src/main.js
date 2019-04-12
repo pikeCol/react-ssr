@@ -1,8 +1,15 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { Switch, Route } from 'react-router-dom';
+import routes from "./routes";
+
+
 function App () {
   return (
-    <div> hello welcome to ssr</div>
-  )
+    <Switch>
+      {routes.map(route => (
+        <Route key={route.path} {...route} />
+      ))}
+    </Switch>
+  );
 }
-ReactDOM.render(<App />, document.getElementById('app'));
+export default App;
