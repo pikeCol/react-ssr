@@ -36,6 +36,7 @@ app.use(function (req, res, next) {
     'utf8',
     (err, data) => {
       if (err) throw err;
+      console.log('enter')
       // Inserts the rendered React HTML into our main div
       const document = data.replace(
         /<div id="app"><\/div>/,
