@@ -5,16 +5,11 @@ import fs from 'fs';
 import ReactDOMServer from 'react-dom/server';
 // import App from './src/main'
 import BasicExample from './src/example'
-// example
-// import routes from './src/routes'
-import { StaticRouter } from "react-router";
+// example import routes from './src/routes'
+import {StaticRouter} from "react-router";
 import userRoute from './server/router'
-// import { matchPath } from "react-router-dom";
-
-// inside a request
-
-// use `some` to imitate `<Switch>` behavior of selecting only
-// the first to match
+// import { matchPath } from "react-router-dom"; inside a request use `some` to
+// imitate `<Switch>` behavior of selecting only the first to match
 
 const app = express()
 
@@ -27,25 +22,22 @@ app.use(function (req, res, next) {
   const context = {};
   const html = ReactDOMServer.renderToString(
     <StaticRouter location={req.url} context={context}>
-      <BasicExample />
+      <BasicExample/>
     </StaticRouter>
   );
   // res.send(html);
-  fs.readFile(
-    path.join(__dirname, 'dist', 'index.html'),
-    'utf8',
-    (err, data) => {
-      if (err) throw err;
-      // Inserts the rendered React HTML into our main div
-      const document = data.replace(
-        /<div id="app"><\/div>/,
-        `<div id="app">${html}</div>`
-      );
+  fs.readFile(path.join(__dirname, 'static', 'index.html'), 'utf8', (err, data) => {
+    if (err) 
+      throw err;
+    
+    // Inserts the rendered React HTML into our main div
+    const document = data.replace(/<div id="app"><\/div>/, `<div id="app">${html}</div>`);
 
-      // Sends the response back to the client
-      res.status(200).send(document);
-    }
-  );
+    // Sends the response back to the client
+    res
+      .status(200)
+      .send(document);
+  });
 })
 
 app.use('/', express.static(path.join(__dirname, 'dist')));
